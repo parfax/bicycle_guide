@@ -13,3 +13,4 @@ struct Option {
 void getOptions();
 void checkFile(ifstream& file);
 vector<Option>& getVectorOfOptions();
+void clearVector();

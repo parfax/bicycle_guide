@@ -1,2 +1,2 @@
 #include <string>
-const std::string APP_NAME = "Велодовідник | ";
+const std::wstring APP_NAME = L"Велодовідник | ";

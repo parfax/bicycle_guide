@@ -104,7 +104,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\folders\Development\Software Engineering\VS Projects\CPP\_OOP\Велодовідник\Dependencies\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -128,13 +128,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="askHeight.cpp" />
     <ClCompile Include="FileManager.cpp" />
+    <ClCompile Include="findBike.cpp" />
     <ClCompile Include="UI.cpp" />
     <ClCompile Include="Велодовідник.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="askHeight.h" />
     <ClInclude Include="FileManager.h" />
     <ClInclude Include="Constants.h" />
+    <ClInclude Include="findBike.h" />
     <ClInclude Include="UI.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -2,7 +2,7 @@
 #include "UI.h"
 
 vector<Option> options;
-
+ordered_json jsonFile;
 vector<Option>& getVectorOfOptions() { return options; }
 
 // Перевіряємо чи існує файл, інакше виводимо помилку
@@ -13,12 +13,10 @@ void checkFile(ifstream& f) {
 	}
 }
 
-void getOptions() {
-	// Спробуємо відкрити файл
+void initVectorOfOptions() {
 	ifstream f("Materials/Main Menu/options.json");
 	checkFile(f);
 
-	ordered_json jsonFile;
 	f >> jsonFile;
 
 	// Ініціалізуємо масив опцій
@@ -29,12 +27,21 @@ void getOptions() {
 
 		options.push_back(option);
 	}
+	f.close();
+}
+
+void getOptions() {
+	// Не потрібно проводити одні й ті ж процедури, якщо вектор вже був ініціалізований.
+	if (options.size() == 0) initVectorOfOptions();
 
 	// Виводимо доступні опції
 	setUTF8();
 	for (size_t i = 0; i < options.size(); i++)
 		printf("%d. %s\n", i + 1, options[i].name.c_str());
-	setLocale();
+	setLocale();	
+}
 
-	f.close();
+void clearVector() {
+	delete[] options.data();
+	jsonFile.clear();
 }

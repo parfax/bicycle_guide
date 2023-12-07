@@ -1,4 +1,6 @@
 ﻿#include "FileManager.h"
+#include "askHeight.h"
+#include "findBike.h"
 #include "UI.h"
 using namespace std;
 
@@ -10,14 +12,13 @@ size_t getInput(string question) {
 	do {
 		printf(question.c_str());
 		scanf_s("%d", &choice);
-	} while (choice < 1 || choice > vectorOfOptions.size());
+	} while ((choice < 1 && choice != 0) || choice > vectorOfOptions.size());
 	return choice;
 }
 
-int main()
-{
-	setLocale();
-	setTitle("Головне меню");
+void showMenu() {
+	system("cls");
+	setTitle(L"Головне меню");
 
 	// Код головного меню
 	printf("Вітаємо, ви знаходитесь в меню велодовідника.\n");
@@ -26,25 +27,49 @@ int main()
 
 	// Вибір пункту
 	size_t optionsSize = vectorOfOptions.size();
-	string question = "Ваш вибір (від 1 до " + to_string(optionsSize) + "): ";
+	string question = "\nВаш вибір (Введіть цифру від 1 до " + to_string(optionsSize) + ",\n0 - щоб вийти з програми): ";
 	size_t choice = getInput(question);
-	
-	// Наступний крок
-	//setUTF8();
-	setTitle(vectorOfOptions[choice - 1].name);
-	//setLocale();
+	if (choice == 0) return;
+
+	// Наступний крок	
+	// Задаємо заголовок
+	wstring wideString = to_wstring(vectorOfOptions[choice - 1].name);
+	setTitle(wideString);
+
+	// Працюємо з наступним файлом
 	system("cls");
-	ifstream f(vectorOfOptions[choice - 1].path);
+	wstring path = to_wstring(vectorOfOptions[choice - 1].path), askFrameSize = L"askFrameSize", askFindBike = L"findBike";
+	if (path == askFrameSize) {
+		discoverFrameSize();
+	}
+	else if (path == askFindBike) {
+		discoverBikes();
+	}
+
+	ifstream f(path);
 	checkFile(f);
 
-	string line;
 	setUTF8();
+	// Виводимо інформацію
+	string line;
 	while (getline(f, line)) {
 		printf("%s\n", line.c_str());
 	}
 	setLocale();
-
 	f.close();
 
+	printf("\nНатисніть будь яку клавішу аби потрапити на головне меню...");
 	_getch();
+	showMenu();
+}
+
+int main()
+{
+	setLocale();
+	showMenu();
+
+	printf("\nДо зустрічі!");
+
+	//clearVector();
+	//delete[] vectorOfOptions.data();
 }
